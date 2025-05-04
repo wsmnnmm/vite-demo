@@ -20,6 +20,10 @@ document.querySelector("#app").innerHTML = `
       <button id="hmr-demo" type="button">热更新演示</button>
       <div id="hmr-result"></div>
     </div>
+    <div class="card">
+      <button id="tree-shaking-demo" type="button">Tree-Shaking 演示</button>
+      <div id="tree-shaking-result"></div>
+    </div>
   </div>
 `;
 
@@ -62,4 +66,15 @@ document.querySelector("#hmr-demo").addEventListener("click", () => {
   document.querySelector(
     "#hmr-result"
   ).textContent = `${data.message} (更新于 ${data.time}, 热更新次数: ${data.count})`;
+});
+
+// 添加 Tree-Shaking 演示按钮事件
+document.querySelector("#tree-shaking-demo").addEventListener("click", async () => {
+  // 静态导入 - 这里会触发 Tree-Shaking
+  const { showTreeShakingDemo } = await import("./treeShakingDemo.js");
+  document.querySelector("#tree-shaking-result").textContent = showTreeShakingDemo();
+  
+  console.log("Tree-Shaking 演示已加载");
+  console.log("请在开发者工具的网络面板中查看加载的模块");
+  console.log("或在生产构建后检查打包文件，未使用的函数应被移除");
 });
