@@ -1,6 +1,6 @@
 import "./style.css";
 import { setupCounter } from "./counter.js";
-import { getTimeMessage } from "./hmrDemo.js";
+import { getTimeMessage, incrementCount } from "./hmrDemo.js";
 
 document.querySelector("#app").innerHTML = `
   <div>
@@ -54,9 +54,11 @@ document
     console.log("依赖模块已加载，请在网络面板中观察");
   });
 
-// 添加热更新演示按钮事件
+//添加热更新演示按钮事件;
 document.querySelector("#hmr-demo").addEventListener("click", () => {
   const data = getTimeMessage();
+  // 手动点击时也递增计数
+  data.count = incrementCount();
   document.querySelector(
     "#hmr-result"
   ).textContent = `${data.message} (更新于 ${data.time}, 热更新次数: ${data.count})`;
